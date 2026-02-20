@@ -1,0 +1,24 @@
+# This YAML file defines the mapping and transformation rules for integrating data from OncoKB into a Knowledge Graph (KG).
+
+# You have to add the nodes that are "duplicative" between diff db
+# If in the HPA.yaml file "Gens" is already mapped
+# If i have to write the duplicates, then in row: it'll be gene, if not, it'll be cancer!
+
+# Index
+row : 
+    map:
+        columns: Gene # column name in the dataframe
+        to_subject: gene # give name to the node type in the KG
+
+transformers:
+# Node with relation to index
+    - map:
+        columns: Cancer Types # column name in the dataframe
+        to_object: cancer # give name to the node type in the KG
+        via_relation: associated_to # specify the relation type between the subject ('Gene') and object ('Cancer')
+
+# Properties for the edge type 'associated_to'
+    - map:
+        columns: Alterations # column name in the dataframe to extract the property value from
+        to_property: alterations # give name to the property in the KG
+        for_object: associated_to # specify the edge type to which the property belongs
