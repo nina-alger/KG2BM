@@ -1,0 +1,28 @@
+# Copied-paste from /ontoweaver-vignette/jobim/1_Simple_mapping/biocypher_schema.yaml 
+# Edited to fit the needs of the HPA adapter first
+
+########################
+# NODES
+########################
+
+# Defined in alphabetical order
+
+gene:
+    represented_as: node
+    label_in_input: gene
+
+tissue:
+    is_a: gross anatomical structure # same name as in ontology (very important for ontoweaver)
+    represented_as: node
+    label_in_input: tissue
+
+########################
+# EDGES
+########################
+
+gene expressed in tissue:
+    is_a: expressed in # ontology name
+    represented_as: edge
+    label_in_input: gene_expressed_in_tissue # same name as in mapping file
+    source: gene
+    target: tissue
