@@ -17,8 +17,6 @@ tissue:
     is_a: gross anatomical structure # same name as in ontology (very important for ontoweaver)
     represented_as: node
     label_in_input: tissue
-    properties:
-        - nTPM: float
 
 cancer:
     is_a: disease # same name as in ontology (very important for ontoweaver)
@@ -35,6 +33,8 @@ gene expressed in tissue:
     label_in_input: gene_expressed_in_tissue # same name as in mapping file
     source: gene
     target: tissue
+    properties:
+        - nTPM: float
 
 associated to:
     is_a: gene to disease association # ontology name

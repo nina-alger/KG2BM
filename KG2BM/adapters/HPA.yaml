@@ -3,24 +3,24 @@
 row:
 # Index
     map:
-        columns: Gene name # column name in the dataframe
+        column: Gene name # column name in the dataframe
         to_subject: gene # give name to the node type in the KG
 
 transformers:
 # Nodes
     - map: 
-        columns: Tissue # column name in the dataframe
+        column: Tissue # column name in the dataframe
         to_object: tissue # give name to the node type in the KG
         via_relation: gene_expressed_in_tissue # specify the relation type between the subject ('Tissue') and object ('Gene')
 
 # Properties for the node type 'Tissue' 
     - map:
-        columns: nTPM # column name in the dataframe to extract the property value from
+        column: nTPM # column name in the dataframe to extract the property value from
         to_property: nTPM # give name to the property in the KG
-        for_objects: tissue # specify the node type to which the property belongs
+        for_object: gene_expressed_in_tissue # specify the node type to which the property belongs
 
 # Properties for the node type 'Gene'
     - map:
-        columns: Gene
+        column: Gene
         to_property: Ensembl_ID
-        for_objects: gene
+        for_object: gene
