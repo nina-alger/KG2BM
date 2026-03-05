@@ -3,7 +3,7 @@
 row:
 # Index
     map:
-        column: Gene name # column name in the dataframe
+        column: Gene # column name in the dataframe : Values in this specific column will be used as the subject in the KG = Ensembl id
         to_subject: gene # give name to the node type in the KG
 
 transformers:
@@ -21,6 +21,6 @@ transformers:
 
 # Properties for the node type 'Gene'
     - map:
-        column: Gene
-        to_property: Ensembl_ID
+        column: Gene name
+        to_property: gene_symbol
         for_object: gene

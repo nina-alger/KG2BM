@@ -7,26 +7,135 @@
 
 # Defined in alphabetical order
 
-gene:
-    represented_as: node
-    label_in_input: gene
-    properties:
-        - Ensembl_ID: str
-
-tissue:
-    is_a: gross anatomical structure # same name as in ontology (very important for ontoweaver)
-    represented_as: node
-    label_in_input: tissue
+# Cancer
 
 cancer:
     is_a: disease # same name as in ontology (very important for ontoweaver)
     represented_as: node
     label_in_input: cancer
 
+# Drug
+
+drug:
+    represented_as: node
+    input_label: drug # final_type node type
+    properties:
+        name: str
+        ncbi_tax_id: str
+
+# Gene
+
+source gene:
+    is_a: gene
+    represented_as: node
+    label_in_input: source_gene
+    properties:
+        gene_symbol: str
+        gene_summary: str
+        data_source: str
+
+target gene:
+    is_a: gene
+    represented_as: node
+    label_in_input: target_gene
+    properties:
+        gene_symbol: str
+        gene_summary: str
+        data_source: str
+
+gene:
+    represented_as: node
+    label_in_input: gene # Ensemble ID
+    properties:
+        gene_symbol: str 
+        gene_summary: str
+        data_source: str
+
+# Long non Coding - RNA
+
+lncrna:
+    is_a: noncoding RNA product
+    represented_as: node
+    input_label: lncrna
+    properties:
+        name: str
+        ncbi_tax_id: str
+
+# Macromolecular complex
+
+source complex:
+    is_a: macromolecular_complex
+    represented_as: node
+    input_label: source_complex
+    properties:
+        name: str
+        ncbi_tax_id: str
+
+target complex:
+    is_a: macromolecular_complex
+    represented_as: node
+    input_label: target_complex
+    properties:
+        name: str
+        ncbi_tax_id: str
+
+macromolecular complex:
+    represented_as: node
+    input_label: macromolecular_complex 
+    properties:
+        name: str
+        ncbi_tax_id: str
+
+# Micro-RNA
+
+mirna:
+    is_a: microRNA
+    represented_as: node
+    input_label: mirna
+    properties:
+        name: str
+        ncbi_tax_id: str
+
+# Protein
+
+source protein:
+    is_a: protein
+    represented_as: node
+    input_label: source_protein
+    properties:
+        ensembl_gene_id: str
+        gene_symbol: str
+        ncbi_tax_id: str
+
+target protein:
+    is_a: protein
+    represented_as: node
+    input_label: target_protein
+    properties:
+        ensembl_gene_id: str
+        gene_symbol: str
+        ncbi_tax_id: str
+
+protein:
+    represented_as: node
+    input_label: protein # UniProt ID
+    properties:
+        ensembl_gene_id: str 
+        gene_symbol: str
+        ncbi_tax_id: str
+
+# Tissue
+
+tissue:
+    is_a: gross anatomical structure # same name as in ontology (very important for ontoweaver)
+    represented_as: node
+    label_in_input: tissue
+
 ########################
 # EDGES
 ########################
 
+# gene -> tissue
 gene expressed in tissue:
     is_a: expressed in # ontology name
     represented_as: edge
@@ -34,8 +143,9 @@ gene expressed in tissue:
     source: gene
     target: tissue
     properties:
-        - nTPM: float
+        nTPM: float
 
+# gene -> cancer
 associated to:
     is_a: gene to disease association # ontology name
     represented_as: edge
@@ -43,4 +153,109 @@ associated to:
     source: gene
     target: cancer
     properties:
-        - alterations: list # this property is a list of alterations
+        alterations: list # this property is a list of alterations
+
+# protein-protein interactions [copied from /omnipath-secondary-adapter/config/schema_config.yaml]
+
+undirected molecular interaction:
+    is_a: pairwise molecular interaction
+    represented_as: edge
+    input_label: undirected_molecular_interaction
+    properties:
+        is_directed: bool
+        is_stimulation: bool
+        is_inhibition: bool
+        consensus_direction: bool
+        consensus_stimulation: bool
+        consensus_inhibition: bool
+        sources: str
+        references: str
+        omnipath: bool
+        kinaseextra: bool
+        ligrecextra: bool
+        pathwayextra: bool
+        dorothea: bool
+        collectri: bool
+        tf_target: bool
+        lncrna_mrna: bool
+        tf_mirna: bool
+        small_molecule: bool
+        dorothea_curated: bool
+        dorothea_chipseq: bool
+        dorothea_tfbs: bool
+        dorothea_coexp: bool
+        dorothea_level: str
+        type: str
+        curation_effort: str
+        extra_attrs: str
+        evidences: str
+
+stimulation:
+    is_a: pairwise molecular interaction
+    represented_as: edge
+    input_label: stimulation
+    properties:
+        is_directed: bool
+        is_stimulation: bool
+        is_inhibition: bool
+        consensus_direction: bool
+        consensus_stimulation: bool
+        consensus_inhibition: bool
+        sources: str
+        references: str
+        omnipath: bool
+        kinaseextra: bool
+        ligrecextra: bool
+        pathwayextra: bool
+        dorothea: bool
+        collectri: bool
+        tf_target: bool
+        lncrna_mrna: bool
+        tf_mirna: bool
+        small_molecule: bool
+        dorothea_curated: bool
+        dorothea_chipseq: bool
+        dorothea_tfbs: bool
+        dorothea_coexp: bool
+        dorothea_level: str
+        type: str
+        curation_effort: int
+        extra_attrs: str
+        evidences: str
+
+inhibition:
+    is_a: pairwise molecular interaction
+    represented_as: edge
+    input_label: inhibition
+    properties:
+        is_directed: bool
+        is_stimulation: bool
+        is_inhibition: bool
+        consensus_direction: bool
+        consensus_stimulation: bool
+        consensus_inhibition: bool
+        sources: str
+        references: str
+        omnipath: bool
+        kinaseextra: bool
+        ligrecextra: bool
+        pathwayextra: bool
+        dorothea: bool
+        collectri: bool
+        tf_target: bool
+        lncrna_mrna: bool
+        tf_mirna: bool
+        small_molecule: bool
+        dorothea_curated: bool
+        dorothea_chipseq: bool
+        dorothea_tfbs: bool
+        dorothea_coexp: bool
+        dorothea_level: str
+        type: str
+        curation_effort: int
+        extra_attrs: str
+        evidences: str
+
+transcript to gene relationship:
+    represented_as: edge
+    input_label: transcript_to_gene_relationship
