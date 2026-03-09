@@ -219,7 +219,7 @@ stimulation:
         dorothea_coexp: bool
         dorothea_level: str
         type: str
-        curation_effort: int
+        curation_effort: str
         extra_attrs: str
         evidences: str
 
@@ -252,7 +252,7 @@ inhibition:
         dorothea_coexp: bool
         dorothea_level: str
         type: str
-        curation_effort: int
+        curation_effort: str
         extra_attrs: str
         evidences: str
 

@@ -293,19 +293,21 @@ transformers:
             - undirected_molecular_interaction
             - stimulation
             - inhibition
-    - map:
+    - replace:
         column: extra_attrs
         to_property: extra_attrs
         for_objects:
             - undirected_molecular_interaction
             - stimulation
             - inhibition
-    - map:
+        forbidden: "'"
+    - replace:
         column: evidences
         to_property: evidences
         for_objects:
             - undirected_molecular_interaction
             - stimulation
             - inhibition
+        forbidden: "'"
 metadata:
         - data_source: omnipath_networks
