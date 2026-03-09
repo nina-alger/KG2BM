@@ -1,0 +1,39 @@
+row:
+    map:
+        id_from_column: id
+        match_type_from_column: biotype
+        match:
+            - protein_coding:
+                to_subject: gene
+            - TR_V_gene:
+                to_subject: gene
+            - IG_C_gene:
+                to_subject: gene
+            - TR_C_gene:
+                to_subject: gene
+            - transcribed_unitary_pseudogene:
+                to_subject: gene
+
+transformers:
+    - access_proteins:
+        keys:
+            - proteinIds
+            - id
+        to_object: protein
+        via_relation: transcript_to_gene_relationship
+    - map:
+        column: approvedSymbol
+        to_property: gene_symbol
+        for_object: gene
+    - map:
+        column: biotype
+        to_property: biotype
+        for_object: gene
+    - replace:
+        column: approvedName
+        to_property: name
+        for_object: gene
+        forbidden: "'"
+
+metadata:
+        - data_source: open_targets_target

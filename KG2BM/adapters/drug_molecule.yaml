@@ -1,0 +1,104 @@
+row:
+    map:
+        column: id
+        to_subject: row_drug
+        final_type: drug
+
+transformers:
+    # - map:
+    #     column: parentId
+    #     to_object: parent_drug
+    #     final_type: drug
+    #     via_relation: subclass_of
+    # - split:
+    #     column: childChemblIds # [numpy.darray - shape (n,)]
+    #     to_object: child_drug
+    #     final_type: drug
+    #     via_relation: superclass_of
+    - nested:
+        keys:
+            - linkedTargets # [dictionary: key="rows" numpy.darray - shape (1,)]
+            - rows
+            - 0
+        to_object: gene
+        via_relation: drug_has_target
+        # ex: {'rows': array(['', ''], dtype=object),'count': 2}
+        # [0] ou [1] ? FIXME
+    - map:
+        column: canonicalSmiles
+        to_property: canonicalSmiles
+        for_object: row_drug  # Do not forget to map on the temporary type.
+    - map:
+        column: inchiKey
+        to_property: inchiKey
+        for_object: row_drug
+    - map:
+        column: drugType
+        to_property: drugType
+        for_object: row_drug
+    - boolean:
+        column: blackBoxWarning
+        to_property: blackBoxWarning
+        for_object: row_drug
+        consider_true:
+            - True
+        consider_false:
+            - False
+        output_true: True
+        output_false: False
+    - replace:
+        column: name
+        to_property: drugName
+        for_object: row_drug
+        forbideen: "'"
+    - map:
+        column: yearOfFirstApproval
+        to_property: yearOfFirstApproval
+        for_object: row_drug
+    - map:
+        column: maximumClinicalTrialPhase
+        to_property: maximumClinicalTrialPhase
+        for_object: row_drug
+    - boolean:
+        column: hasBeenWithdrawn
+        to_property: hasBeenWithdrawn
+        for_object: row_drug
+        consider_true:
+            - True
+        consider_false:
+            - False
+        output_true: True
+        output_false: False
+    - boolean:
+        column: isApproved
+        to_property: isApproved
+        for_object: row_drug
+        consider_true:
+            - True
+        consider_false:
+            - False
+            - None
+        output_true: True
+        output_false: False
+    - split_replace:
+        column: tradeNames # [numpy.darray - shape (n,)]
+        to_property: tradeName
+        for_object: row_drug
+    - split_replace:
+        column: synonyms # [numpy.darray - shape (n,)]
+        to_property: synonym
+        for_object: row_drug
+        forbidden: "'"
+    - urls_to_prop:  # FIXME drugbank does not give 'urls' but only 'ids'
+        column: crossReferences
+        to_property: references
+        for_object: row_drug
+        key: 1
+    - replace:
+        column: description
+        to_property: description
+        for_object: row_drug
+        forbideen: "'"
+
+metadata:
+        - data_source: open_targets_drug_molecule

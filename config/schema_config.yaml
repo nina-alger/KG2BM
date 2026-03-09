@@ -1,5 +1,5 @@
-# Copied-paste from /ontoweaver-vignette/jobim/1_Simple_mapping/biocypher_schema.yaml 
-# Edited to fit the needs of the HPA adapter first
+# Includes : HPA , OnocKB , OmniPath
+# Missing : Open Targets
 
 ########################
 # NODES
