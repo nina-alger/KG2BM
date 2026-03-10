@@ -22,6 +22,41 @@ drug:
     properties:
         name: str
         ncbi_tax_id: str
+        canonicalSmiles: str
+        inchiKey: str
+        drugType: str
+        blackBoxWarning: bool
+        drug_name: str
+        yearOfFirstapproval: str
+        maximumClinicalTrialPhase: str
+        hasBeenWithdrawn: bool
+        isApproved: bool
+        tradeName: str
+        synonym: str
+        references: str
+        description: str
+        data_source: str
+
+row drug:
+    is_a: drug
+    represented_as: node
+    label_in_input: row_drug
+    properties:
+        canonicalSmiles: str
+        inchiKey: str
+        drugType: str
+        blackBoxWarning: bool
+        drug_name: str
+        yearOfFirstapproval: str
+        maximumClinicalTrialPhase: str
+        hasBeenWithdrawn: bool
+        isApproved: bool
+        tradeName: str
+        synonym: str
+        references: str
+        description: str
+        data_source: str
+
 
 # Gene
 
@@ -50,6 +85,8 @@ gene:
         gene_symbol: str 
         gene_summary: str
         data_source: str
+        name: str
+        # biotype: str
 
 # Long non Coding - RNA
 
@@ -60,6 +97,7 @@ lncrna:
     properties:
         name: str
         ncbi_tax_id: str
+
 
 # Macromolecular complex
 
@@ -123,6 +161,7 @@ protein:
         ensembl_gene_id: str 
         gene_symbol: str
         ncbi_tax_id: str
+        data_source: str
 
 # Tissue
 
@@ -256,6 +295,19 @@ inhibition:
         extra_attrs: str
         evidences: str
 
+# gene -> protein
 transcript to gene relationship:
     represented_as: edge
     input_label: transcript_to_gene_relationship
+    properties:
+        data_source: str
+
+# drug -> gene
+drug has target:
+    is_a: drug to gene association
+    represented_as: edge
+    label_in_input: drug_has_target
+    properties:
+        data_source: str
+        action_type: str # added from opentargets-dti open_targets_schema_config.yaml
+        mechanism_of_action: str # added from opentargets-dti open_targets_schema_config.yaml

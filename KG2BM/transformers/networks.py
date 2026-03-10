@@ -23,6 +23,7 @@ class OmniPath_directed(base.Transformer):
         possible_sources = ["protein", "source_protein", "mirna", "lncrna", "drug", "macromolecular_complex"]
         possible_targets = ["protein", "macromolecular_complex", "mirna"]
 
+        # Then declare all edge classes used in the branching logic. We can do this in a loop to avoid redundancy, since all edge classes share the same source and target node types.
         for possible_source in possible_sources:
             for possible_target in possible_targets:
                 self.declare_types.make_edge_class("undirected_molecular_interaction", getattr(owtypes, possible_source), getattr(owtypes, possible_target), self.branching_properties.get("undirected_molecular_interaction", {}))
@@ -91,7 +92,9 @@ class OmniPath_directed(base.Transformer):
 
 
 
-##################################################################
+#################################################################
+#                   NOT USED IN THIS PROJECT 
+#################################################################
 
 class OmniPath(base.Transformer):
     """Custom end-user transformer, used to create elements for OmniPath KG database."""

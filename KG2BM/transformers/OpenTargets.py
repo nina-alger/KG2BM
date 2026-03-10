@@ -52,7 +52,8 @@ class urls_to_prop(ontoweaver.base.Transformer):
         )
 
 
-class access_proteins(ontoweaver.base.Transformer):
+class access_proteins(ontoweaver.base.Transformer): 
+# Specifically for protein entries that come from UniProt Swiss-Prot.
 
     def __init__(self,
         properties_of,
@@ -67,6 +68,10 @@ class access_proteins(ontoweaver.base.Transformer):
     ):
         """
         FIXME doc
+
+        Initializes the transformer by setting up two sub-transformers: 
+        one for splitting a delimited string (column 0), and one for 
+        accessing nested dictionary-like data (columns 1+).
         """
 
         logging.debug(f"COLUMNS: {type(columns)}\n{columns}")
@@ -74,6 +79,8 @@ class access_proteins(ontoweaver.base.Transformer):
         assert isinstance(columns, list), "I need several keys."
         assert len(columns) >= 2, "I need 2 keys, or you should use either split or nested."
 
+        # STEP 1: Set up the 'split' transformer.
+        # This will process ONLY the first column (columns[0]).
         self.split = ontoweaver.transformer.split(
             properties_of,
             label_maker,
@@ -90,6 +97,7 @@ class access_proteins(ontoweaver.base.Transformer):
         if not isinstance(keys, list):
             keys = [keys]
 
+        # STEP 2: Set up the 'nested' transformer.
         self.nested = ontoweaver.transformer.nested(
             properties_of,
             label_maker,
