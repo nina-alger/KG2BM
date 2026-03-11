@@ -34,8 +34,18 @@ for filepath, yaml_adapter in data_mappings.items():
     # 1. Load the file correctly based on its extension
     if filepath.endswith('.tsv') or filepath.endswith('.txt'):
         df = pd.read_csv(filepath, sep='\t', low_memory=False)
+
     elif filepath.endswith('.parquet'):
-        df = pd.read_parquet(filepath)
+        # --- OPEN TARGETS FIX ---
+        # If this is the drug_molecule dataset, only load the flat scalar columns.
+        # This completely drops the nested 'linkedTargets' arrays so OntoWeaver doesn't crash.
+        if "drug_molecule" in filepath:
+            safe_columns = ["id", "name", "isApproved", "tradeNames", "description"]
+            df = pd.read_parquet(filepath, columns=safe_columns)
+        else:
+            # For other parquet files (target, drug_mechanism_of_action), load everything
+            df = pd.read_parquet(filepath)
+        # ------------------------
     else:
         df = pd.read_csv(filepath, low_memory=False)
         
