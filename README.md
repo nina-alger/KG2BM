@@ -4,16 +4,27 @@ Automating the Construction of Contextual Knowledge Graphs (using ontoweaver) fo
 
 # Datasets used 
 ## Human Protein Atlas
-[Consensus RNA data](https://www.proteinatlas.org/download/tsv/rna_tissue_consensus.tsv.zip)
+[Consensus RNA data](https://www.proteinatlas.org/humanproteome/tissue/data#consensus_tissues_rna)
+
+[Click here to download the data](https://www.proteinatlas.org/download/tsv/rna_tissue_consensus.tsv.zip)  
+| Gene      | Gene name | Tissue | nTPM
+| ----------- | ----------- | ---- | ----|
+| Ensemble Id      | Hugo Symbole (HGNC) | tissue name | normalized expression |
+
+
 ## OncoKB
-Need to ask permission to download this data that you'll find in the `Actionable Genes` tab
+Need to ask permission to download this data that you'll find in the `Actionable Genes` tab once permission accepeted : https://faq.oncokb.org/licensing
+| Level | Gene | Alterations
+| --- | ---| ---
+| Therapeutic level of Evidence | Hugo Symbol (HGNC) |  Alteration type(s)
+
 ## OmniPath
-Out of the 5 db we used Networks
+Out of the 5 db we used the **Networks** db (with 36 columns) 
 ## Open Targets
-3 datsets were used from this plateforme : 
-- [Targets](https://platform.opentargets.org/downloads/target/access)
-- [Drug - Mechanisme of actions](https://platform.opentargets.org/downloads/drug_mechanism_of_action/access)
-- [Drug/Clinical Candidates](https://platform.opentargets.org/downloads/drug_molecule/access) 
+3 datasets were used from this plateforme : 
+- [Targets](https://platform.opentargets.org/downloads/target/access) : Defines the biological **nodes** (genes and proteins), providing their genomic properties and tractability.
+- [Drug - Mechanisme of actions](https://platform.opentargets.org/downloads/drug_mechanism_of_action/access) : Defines the **edges** connecting drugs to targets, specifying the exact biochemical interaction (e.g., inhibitor, agonist).
+- [Drug/Clinical Candidates](https://platform.opentargets.org/downloads/drug_molecule/access) : Defines the therapeutic molecule **nodes**, detailing their chemical structures (SMILES) and clinical trial status.
 
 # Ontoweaver & BioCypher
 - 1 adapter for each dataset (**6 in total for this KG**)
@@ -34,7 +45,7 @@ Out of the 5 db we used Networks
  sudo -u neo4j neo4j-admin server stop 
  
  # Import SKG 
- sudo bash <path to .sh file>
+ sudo bash <path to .sh file in /biocypher-out>
 
 # Recursively change ownership of the Neo4j data directory to the neo4j user and group to ensure the database service has read/write permissions.
 sudo chown -R neo4j:neo4j /var/lib/neo4j/data

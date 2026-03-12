@@ -36,16 +36,8 @@ for filepath, yaml_adapter in data_mappings.items():
         df = pd.read_csv(filepath, sep='\t', low_memory=False)
 
     elif filepath.endswith('.parquet'):
-        # --- OPEN TARGETS FIX ---
-        # If this is the drug_molecule dataset, only load the flat scalar columns.
-        # This completely drops the nested 'linkedTargets' arrays so OntoWeaver doesn't crash.
-        if "drug_molecule" in filepath:
-            safe_columns = ["id", "name", "isApproved", "tradeNames", "description"]
-            df = pd.read_parquet(filepath, columns=safe_columns)
-        else:
-            # For other parquet files (target, drug_mechanism_of_action), load everything
-            df = pd.read_parquet(filepath)
-        # ------------------------
+        df = pd.read_parquet(filepath)
+        
     else:
         df = pd.read_csv(filepath, low_memory=False)
         
@@ -59,12 +51,16 @@ print("Writing nodes and edges to BioCypher...")
 bc_nodes = [n.as_tuple() for n in nodes]
 bc_edges = [e.as_tuple() for e in edges]
 
-ontoweaver.reconciliate_write(
+bc = ontoweaver.reconciliate_write(
     nodes=bc_nodes,
     edges=bc_edges,
     biocypher_config_path="./config/biocypher_config.yaml",
     schema_path="./config/schema_config.yaml",
     reconciliate_sep="|"
 )
+
+# 4. EXPLICITLY COMMAND THE GENERATION OF THE BASH SCRIPT!
+# import_script = bc.write_import_call()
+# print(f"\nSUCCESS! Your Neo4j import script is located at: {import_script}")
 
 print("Done!")
