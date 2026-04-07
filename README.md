@@ -4,7 +4,9 @@
     2. ~~Download hgnc_complete_set.txt file~~  
 * Create a `.sh` file that'll : 
     1. Run Ontoweaver : Build the SKG via `weave_KG2BM.py`
+        * Pathways & GO? 
     2. Run the Query : Give a biological context to extract a **list of proteins**
+        * Ideal to write as a user your `.yaml` file with your own context 
     3. Run NeKo : Build the Network for the BM
 * Cite OncodashKB in this `README.md`. 
 

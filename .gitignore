@@ -133,7 +133,7 @@ dmypy.json
 .pyre/
 .idea
 
-# Cached Omnipath data 
+# Data : OncoKB  
 data
 
 # Import report file
@@ -145,9 +145,9 @@ sandbox
 # Profiling Files
 profiling*
 
-# OmniPath & OpenTargets adapters and custom transformers
+# OmniPath & OpenTargets adapters and custom transformers : OncodashKB DECIDER project
 drug_mechanisms_of_action.yaml
 drug_molecules.yaml
 network.yaml
 target.yaml
-/transformers
+KG2BM/transformers
