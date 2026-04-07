@@ -35,7 +35,7 @@ fi
 
 
 echo "Download data:" >&2
-# mkdir -p data
+mkdir -p data
 cd data
 rsync_cmd="rsync --ignore-existing -rpltvz --delete"
 
@@ -48,8 +48,14 @@ $rsync_cmd rsync.ebi.ac.uk::pub/databases/opentargets/platform/${ot_version}/out
 echo " | Drug-Molecule..." >&2
 $rsync_cmd rsync.ebi.ac.uk::pub/databases/opentargets/platform/${ot_version}/output/drug_molecule .
 
-echo " | OK" >&2
+echo " | Gene Symbol to Ensembl ID" >&2
+mkdir -p HGNC
+cd HGNC
+wget https://storage.googleapis.com/public-download-files/hgnc/tsv/tsv/hgnc_complete_set.txt
+cd ..
+echo " | Gene Symbol to Ensemble ID dataframe — OK" >&2
 
+echo " | OK" >&2
 
 echo "Everything is OK, you can now call: ./make.sh." >&2
 

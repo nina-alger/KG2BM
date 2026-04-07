@@ -144,3 +144,10 @@ sandbox
 
 # Profiling Files
 profiling*
+
+# OmniPath & OpenTargets adapters and custom transformers
+drug_mechanisms_of_action.yaml
+drug_molecules.yaml
+network.yaml
+target.yaml
+/transformers

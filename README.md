@@ -1,3 +1,13 @@
+# To do : 
+* Create a `prepare.sh` file that'll : 
+    1. Download OpenTargets and OmniPath adpaters and custom transformers from OncodashKB 
+    2. ~~Download hgnc_complete_set.txt file~~  
+* Create a `.sh` file that'll : 
+    1. Run Ontoweaver : Build the SKG via `weave_KG2BM.py`
+    2. Run the Query : Give a biological context to extract a **list of proteins**
+    3. Run NeKo : Build the Network for the BM
+* Cite OncodashKB in this `README.md`. 
+
 # KG2BM
 *M2 internship project with Institut de Mathémathique de Marseille (I2M) collaborating with Institut Pasteur (Paris).*  
 Automating the Construction of Contextual Knowledge Graphs (using ontoweaver) for Boolean Modeling in Systems Biomedicine.  

@@ -2,8 +2,11 @@ import biocypher
 import ontoweaver
 import logging
 import glob
-import pandas as pd # ADDED: Needed to safely load mixed file formats
+import pandas as pd # Needed to safely load mixed file formats 
 
+# =========================================================
+# 1. REGISTER TRANSFORMERS
+# =========================================================
 # Importing & Registering custom transformer : OmniPath & Open Targets
 from KG2BM.transformers.networks import OmniPath_directed
 ontoweaver.transformer.register(OmniPath_directed)
@@ -12,7 +15,9 @@ from KG2BM.transformers.OpenTargets import access_proteins, urls_to_prop
 ontoweaver.transformer.register(access_proteins)
 ontoweaver.transformer.register(urls_to_prop)
 
-# Define the path to the mapping file. This time we define two paris of DATABASE:MAPPING_FILE mappings.
+# =========================================================
+# 2. YOUR ORIGINAL DATA MAPPINGS
+# =========================================================
 data_mappings = {
     # 1. Single tables : 
     "./data/oncokb_biomarker_drug_associations.tsv": "./KG2BM/adapters/oncoKB.yaml", # OncoKB
@@ -25,28 +30,52 @@ data_mappings = {
     **{f: "KG2BM/adapters/drug_mechanism_of_action.yaml" for f in glob.glob("./data/drug_mechanisme_of_action/*.parquet")}, # Open Targets - drug_mechanism_of_action
 }
 
-# REPLACED: ontoweaver.weave() is replaced with a loop to handle TSVs and Parquets correctly.
+# =========================================================
+# 3. LOAD EXTERNAL FILTER DATA
+# =========================================================
+translations_file = "./data/HGNC/hgnc_complete_set.txt"
+translations_table = pd.read_table(translations_file, sep="\t")
+
+# =========================================================
+# 4. THE EXTRACTION LOOP
+# =========================================================
 nodes, edges = [], []
 
 for filepath, yaml_adapter in data_mappings.items():
     print(f"Reading {filepath}...")
     
-    # 1. Load the file correctly based on its extension
-    if filepath.endswith('.tsv') or filepath.endswith('.txt'):
-        df = pd.read_csv(filepath, sep='\t', low_memory=False)
+    # --- ROUTE A: It is the OmniPath file ---
+    if "omnipath_webservice_interactions" in filepath:
+        # Load instantly with standard pandas
+        table = pd.read_csv(filepath, sep='\t', low_memory=False)
+        
+        # Filtering
+        table['source_genesymbol'] = table['source_genesymbol'].str.upper()
+        table['target_genesymbol'] = table['target_genesymbol'].str.upper()
 
+        df = table[
+            ((table['source_genesymbol'].isin(translations_table.symbol)) | (table.entity_type_source!="protein")) & 
+            ((table['target_genesymbol'].isin(translations_table.symbol)) | (table.entity_type_target!="protein"))
+        ]
+        
+    # --- ROUTE B: It is an Open Targets Parquet file ---
     elif filepath.endswith('.parquet'):
         df = pd.read_parquet(filepath)
         
+    # --- ROUTE C: It is a standard TSV (like OncoKB or HPA) ---
     else:
-        df = pd.read_csv(filepath, low_memory=False)
+        df = pd.read_csv(filepath, sep='\t', low_memory=False)
         
-    # 2. Extract nodes and edges from the DataFrame
+        
+    # --- ONTOWEAVER EXTRACTION ---
     n, e = ontoweaver.extract_table(df, config=yaml_adapter, affix="suffix")
     nodes.extend(n)
     edges.extend(e)
 
-# 3. Reconciliate properties, and write nodes to BioCypher.
+# =========================================================
+# 5. WRITE TO BIOCYPHER
+# =========================================================
+# Reconciliate properties, and write nodes to BioCypher.
 print("Writing nodes and edges to BioCypher...")
 bc_nodes = [n.as_tuple() for n in nodes]
 bc_edges = [e.as_tuple() for e in edges]
