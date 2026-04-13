@@ -1,3 +1,4 @@
+import sys
 import biocypher
 import ontoweaver
 import logging
@@ -21,7 +22,7 @@ ontoweaver.transformer.register(urls_to_prop)
 data_mappings = {
     # 1. Single tables : 
     "./data/oncokb_biomarker_drug_associations.tsv": "./KG2BM/adapters/oncoKB.yaml", # OncoKB
-    "./data/rna_tissue_consensus_head10.tsv": "./KG2BM/adapters/HPA.yaml" , # Human Protein Atlas - RNA tissue consensus
+    "./data/rna_tissue_consensus.tsv": "./KG2BM/adapters/HPA.yaml" , # Human Protein Atlas - RNA tissue consensus
     "./data/omnipath_webservice_interactions__latest.tsv": "./KG2BM/adapters/networks.yaml", # OmniPath
 
     # 2. Parquet files (dynamically unpacked in one line!) : Open Targets
@@ -42,7 +43,7 @@ translations_table = pd.read_table(translations_file, sep="\t")
 nodes, edges = [], []
 
 for filepath, yaml_adapter in data_mappings.items():
-    print(f"Reading {filepath}...")
+    print(f"Reading {filepath}...", file=sys.stderr)
     
     # --- ROUTE A: It is the OmniPath file ---
     if "omnipath_webservice_interactions" in filepath:
@@ -76,7 +77,7 @@ for filepath, yaml_adapter in data_mappings.items():
 # 5. WRITE TO BIOCYPHER
 # =========================================================
 # Reconciliate properties, and write nodes to BioCypher.
-print("Writing nodes and edges to BioCypher...")
+print("Writing nodes and edges to BioCypher...", file=sys.stderr)
 bc_nodes = [n.as_tuple() for n in nodes]
 bc_edges = [e.as_tuple() for e in edges]
 
@@ -88,8 +89,9 @@ bc = ontoweaver.reconciliate_write(
     reconciliate_sep="|"
 )
 
-# 4. EXPLICITLY COMMAND THE GENERATION OF THE BASH SCRIPT!
-# import_script = bc.write_import_call()
-# print(f"\nSUCCESS! Your Neo4j import script is located at: {import_script}")
+# EXPLICITLY COMMAND THE GENERATION OF THE BASH SCRIPT!
+import_script = bc.write_import_call()
 
-print("Done!")
+print(f"bash {import_script}")
+
+print("Done!", file=sys.stderr)
