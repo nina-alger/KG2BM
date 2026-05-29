@@ -151,3 +151,6 @@ drug_molecules.yaml
 network.yaml
 target.yaml
 KG2BM/transformers
+/transformers
+
+uv.lock
