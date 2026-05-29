@@ -40,7 +40,7 @@ sleep 5 # Wait a bit for Neo4j to be fully up and running
 echo "[2/3] Extracting protein list from Neo4j..." >&2
 ${NEO_USER} cypher-shell \
     --username neo4j \
-    --password "qLotter2001!" \
+    --password $(cat neo4j.pass) \
     --format "MATCH (g:Gene) WHERE g.gene_symbol IN ['PIK3CA', 'MAP2K1', 'AKT1', 'MAP3K7', 'MAPK14', 'GSK3B', 'CTNNB1'] RETURN g.gene_symbol;" | tail -n +2 | tr -d '"' > protein_list.txt
 
 # ==========================================

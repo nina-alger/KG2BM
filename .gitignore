@@ -154,3 +154,6 @@ KG2BM/transformers
 /transformers
 
 uv.lock
+
+# neo4j
+neo4j.pass
