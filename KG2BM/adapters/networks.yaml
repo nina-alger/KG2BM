@@ -22,7 +22,7 @@ transformers:
     - translate:
         id_from_column: source_genesymbol
         match_type_from_column: entity_type_source
-        translations_file: data/hgnc_complete_set.txt # Make sur it's the right Path
+        translations_file: data/HGNC/hgnc_complete_set.txt # Make sur it's the right Path
         translate_from: symbol
         translate_to: ensembl_gene_id
         sep: "\t"
@@ -34,7 +34,7 @@ transformers:
     - translate:
         id_from_column: target_genesymbol
         match_type_from_column: entity_type_target
-        translations_file: data/hgnc_complete_set.txt # Make sur it's the right Path
+        translations_file: data/HGNC/hgnc_complete_set.txt # Make sur it's the right Path
         translate_from: symbol
         translate_to: ensembl_gene_id
         sep: "\t"
@@ -52,7 +52,7 @@ transformers:
         column: source_genesymbol
         to_property: ensembl_gene_id
         for_objects: source_protein
-        translations_file: data/hgnc_complete_set.txt # Make sur it's the right Path
+        translations_file: data/HGNC/hgnc_complete_set.txt # Make sur it's the right Path
         translate_from: symbol
         translate_to: ensembl_gene_id
         sep: "\t"
@@ -83,7 +83,7 @@ transformers:
         column: target_genesymbol
         to_property: ensembl_gene_id
         for_objects: target_protein
-        translations_file: data/hgnc_complete_set.txt # Make sur it's the right Path
+        translations_file: data/HGNC/hgnc_complete_set.txt # Make sur it's the right Path
         translate_from: symbol
         translate_to: ensembl_gene_id
         sep: "\t"

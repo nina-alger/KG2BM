@@ -9,7 +9,7 @@ row :
     translate:
         columns: Gene # column name in the dataframe in HGCN format
         to_subject: gene # affect the values of Gene to the node 'gene' in the KG that is in Ensemble id format
-        translations_file: data/hgnc_complete_set.txt # file to use for the translation
+        translations_file: data/HGNC/hgnc_complete_set.txt # file to use for the translation
         translate_from: symbol # column name in the translation file to translate from
         translate_to: ensembl_gene_id # column name in the translation file to translate to
         sep: "\t" # separator used in the translation file
