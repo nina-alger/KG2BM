@@ -38,7 +38,6 @@ sleep 5 # Wait a bit for Neo4j to be fully up and running
 # Step 2: Query Neo4j for the Protein List
 # ==========================================
 echo "[2/3] Extracting protein list from Neo4j..." >&2
-
 ${NEO_USER} cypher-shell \
     --username neo4j \
     --password "qLotter2001!" \
