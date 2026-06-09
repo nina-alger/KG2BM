@@ -41,8 +41,8 @@ Out of the 5 db we used the **Networks** db (with 36 columns)
 # Ontoweaver & BioCypher
 - 1 adapter for each dataset (**6 in total for this KG**)
     - Transformers for OmniPath and Open Targets
-- 1 `biocypher-config.yaml` file for the ontology of the graph
-- 1 `schema-config.yaml` file to coordinate every node and edge (and properties) of the graph
+- 1 `biocypher_config.yaml` file for the ontology of the graph
+- 1 `schema_config.yaml` file to coordinate every node and edge (and properties) of the graph
 
 # Build SKG 
 **Use** Ontoweaver with `weave_KG2BM.py` **running** `$ ./make.sh` in terminal.

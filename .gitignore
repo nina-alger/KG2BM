@@ -151,3 +151,11 @@ drug_molecules.yaml
 network.yaml
 target.yaml
 KG2BM/transformers
+/transformers
+protein_list.txt
+tmp.sh
+
+uv.lock
+
+# neo4j
+neo4j.pass
