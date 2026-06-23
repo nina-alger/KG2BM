@@ -16,6 +16,7 @@ dependencies = [
   "ipykernel>=7.1,<8.0",
   "pandas-stubs>=2.3.3",
   "pyarrow<21.0.0",
+  "nekomata",
 ]
 
 [dependency-groups]
@@ -23,3 +24,6 @@ dev = [
   "pytest>=8.3.4",
   "sphinx_rtd_theme>=3.0.2",
 ]
+
+[tool.uv.sources]
+nekomata = { git = "https://github.com/njmmatthieu/Neko.git", branch = "neko-uv"}
