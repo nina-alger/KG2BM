@@ -57,5 +57,5 @@ echo " | Gene Symbol to Ensemble ID dataframe — OK" >&2
 
 echo " | OK" >&2
 
-echo "Everything is OK, you can now call: ./make.sh." >&2
+echo "Everything is OK, you can now call: ./makeKG.sh." >&2
 
