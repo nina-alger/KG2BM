@@ -57,9 +57,29 @@ echo " │ │  └OK" >&2
 echo " │ OmniPath Networks..." >&2
 mkdir -p omnipath_networks
 cd omnipath_networks
-download https://archive.omnipathdb.org/omnipath_webservice_interactions__latest.tsv.gz
+wget https://archive.omnipathdb.org/omnipath_webservice_interactions__latest.tsv.gz
 cd ..
 echo " │  └OK" >&2
+
+
+echo " | Human Protein Atlas..." >&2
+mkdir -p hpa
+cd hpa
+wget https://www.proteinatlas.org/download/tsv/rna_tissue_consensus.tsv.zip
+
+# Silently extract the zip using built-in tools already in your environment
+if command -v python3 &> /dev/null; then
+    python3 -m zipfile -e rna_tissue_consensus.tsv.zip .
+elif command -v jar &> /dev/null; then
+    jar xf rna_tissue_consensus.tsv.zip
+else
+    echo "Error: Could not extract zip. Neither python3 nor jar are available." >&2
+    exit 1
+fi
+
+
+cd ..
+echo " | └OK" >&2
 
 
 echo " | Gene Symbol to Ensembl ID" >&2
