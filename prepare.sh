@@ -39,21 +39,35 @@ mkdir -p data
 cd data
 rsync_cmd="rsync --ignore-existing -rpltvz --delete"
 
-echo " | Target..." >&2
+echo " │ Open Targets..." >&2
+
+echo " | | Open Targets : Target..." >&2
 $rsync_cmd rsync.ebi.ac.uk::pub/databases/opentargets/platform/${ot_version}/output/target .
+echo " │ │  └OK" >&2
 
-echo " | Drug-Mechanism..." >&2
+echo " | | Open Targets : Drug-Mechanism..." >&2
 $rsync_cmd rsync.ebi.ac.uk::pub/databases/opentargets/platform/${ot_version}/output/drug_mechanism_of_action .
+echo " │ │  └OK" >&2
 
-echo " | Drug-Molecule..." >&2
+echo " | | Open Targets : Drug-Molecule..." >&2
 $rsync_cmd rsync.ebi.ac.uk::pub/databases/opentargets/platform/${ot_version}/output/drug_molecule .
+echo " │ │  └OK" >&2
+
+
+echo " │ OmniPath Networks..." >&2
+mkdir -p omnipath_networks
+cd omnipath_networks
+download https://archive.omnipathdb.org/omnipath_webservice_interactions__latest.tsv.gz
+cd ..
+echo " │  └OK" >&2
+
 
 echo " | Gene Symbol to Ensembl ID" >&2
 mkdir -p HGNC
 cd HGNC
 wget https://storage.googleapis.com/public-download-files/hgnc/tsv/tsv/hgnc_complete_set.txt
 cd ..
-echo " | Gene Symbol to Ensemble ID dataframe — OK" >&2
+echo " | └OK" >&2
 
 echo " | OK" >&2
 
