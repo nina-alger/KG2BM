@@ -58,6 +58,7 @@ echo " │ OmniPath Networks..." >&2
 mkdir -p omnipath_networks
 cd omnipath_networks
 wget https://archive.omnipathdb.org/omnipath_webservice_interactions__latest.tsv.gz
+gunzip omnipath_webservice_interactions__latest.tsv.gz # <-- This extracts the .gz
 cd ..
 echo " │  └OK" >&2
 
@@ -67,7 +68,6 @@ mkdir -p hpa
 cd hpa
 wget https://www.proteinatlas.org/download/tsv/rna_tissue_consensus.tsv.zip
 
-# Silently extract the zip using built-in tools already in your environment
 if command -v python3 &> /dev/null; then
     python3 -m zipfile -e rna_tissue_consensus.tsv.zip .
 elif command -v jar &> /dev/null; then

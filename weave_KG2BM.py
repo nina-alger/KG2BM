@@ -22,8 +22,8 @@ ontoweaver.transformer.register(urls_to_prop)
 data_mappings = {
     # 1. Single tables : 
     "./data/oncokb_biomarker_drug_associations.tsv": "./KG2BM/adapters/oncoKB.yaml", # OncoKB
-    "./data/rna_tissue_consensus.tsv": "./KG2BM/adapters/HPA.yaml" , # Human Protein Atlas - RNA tissue consensus
-    "./data/omnipath_webservice_interactions__latest.tsv": "./KG2BM/adapters/networks.yaml", # OmniPath
+    "./data/hpa/rna_tissue_consensus.tsv": "./KG2BM/adapters/HPA.yaml" , # Human Protein Atlas - RNA tissue consensus
+    "./data/omnipath_networks/omnipath_webservice_interactions__latest.tsv": "./KG2BM/adapters/networks.yaml", # OmniPath
 
     # 2. Parquet files (dynamically unpacked in one line!) : Open Targets
     **{f: "KG2BM/adapters/target.yaml" for f in glob.glob("./data/target/*.parquet")}, # Open Targets - target
