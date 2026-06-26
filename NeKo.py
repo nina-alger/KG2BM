@@ -33,7 +33,7 @@ network_to_export = {"GRN": net1}
 print("Starting export process...")
 
 # Loop through the dictionary and export each one
-for name, net_obj in networks_to_export.items():
+for name, net_obj in network_to_export.items():
     # Initialize the exporter for the specific network object
     exporter = Exports(net_obj)
     
