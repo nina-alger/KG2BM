@@ -15,7 +15,7 @@ output_nodes = ["MYC", "CCND1", "TCF7L2", "FOXO3", "CASP8", "CASP9"]
 
 # Resource : 
 resources = Universe()
-resources = signor("./Signor_filtered.tsv")  # here you put the signor file path
+resources = signor("./data/signor/Signor_filtered.tsv")  # here you put the signor file path
 resources.build()
 
 # NETWORK CONSTRUCTION
