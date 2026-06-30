@@ -62,6 +62,32 @@ gunzip omnipath_webservice_interactions__latest.tsv.gz # <-- This extracts the .
 cd ..
 echo " │  └OK" >&2
 
+echo " | SIGNOR..." >&2
+mkdir -p signor
+cd signor
+
+echo " | | Downloading SIGNOR TSV..." >&2
+# Pulling the complete Human dataset directly from the GET endpoint
+wget -qO signor_db.tsv "https://signor.uniroma2.it/API/getHumanData.php"
+
+echo " | | Filtering SIGNOR data (Protein-Protein only)..." >&2
+# Running your pandas filter directly from Bash
+uv run python -c "
+import pandas as pd
+
+# Files are downloaded into the current 'data/signor' directory
+file_path = 'signor_db.tsv' 
+df = pd.read_csv(file_path, sep='\t')
+
+# Filter for protein-protein interactions
+df_filtered = df.loc[(df['TYPEA'] == 'protein') & (df['TYPEB'] == 'protein')]
+
+# Export the filtered dataframe
+df_filtered.to_csv('Signor_filtered.tsv', sep='\t', index=False)
+"
+cd ..
+echo " | └OK" >&2
+
 
 echo " | Human Protein Atlas..." >&2
 mkdir -p hpa
